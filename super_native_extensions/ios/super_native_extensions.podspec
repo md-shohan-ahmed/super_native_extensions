@@ -20,15 +20,7 @@ A new Flutter plugin project.
 
   s.script_phase = {
     :name => 'Build SuperNativeExtensions Rust library',
-    :script => <<-SCRIPT
-      PREBUILT="$PODS_TARGET_SRCROOT/Prebuilt/$PLATFORM_NAME/libsuper_native_extensions.a"
-      if [ -f "$PREBUILT" ]; then
-        echo "Using pre-built libsuper_native_extensions.a for $PLATFORM_NAME"
-        cp "$PREBUILT" "${BUILT_PRODUCTS_DIR}/libsuper_native_extensions.a"
-      else
-        sh "$PODS_TARGET_SRCROOT/../cargokit/build_pod.sh" ../rust super_native_extensions
-      fi
-    SCRIPT
+    :script => 'PREBUILT="$PODS_TARGET_SRCROOT/Prebuilt/$PLATFORM_NAME/libsuper_native_extensions.a"; if [ -f "$PREBUILT" ]; then echo "Using pre-built library"; cp "$PREBUILT" "${BUILT_PRODUCTS_DIR}/libsuper_native_extensions.a"; else sh "$PODS_TARGET_SRCROOT/../cargokit/build_pod.sh" ../rust super_native_extensions; fi',
     :execution_position => :before_compile,
     :input_files => ['${BUILT_PRODUCTS_DIR}/cargokit_phony'],
     :output_files => ["${BUILT_PRODUCTS_DIR}/libsuper_native_extensions.a"],
